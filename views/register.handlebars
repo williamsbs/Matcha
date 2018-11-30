@@ -4,6 +4,9 @@
         <div class="alert alert-danger">{{msg}}</div>
     {{/each}}
 {{/if}}
+{{#if msg}}
+    <div class="alert alert-danger">{{msg}}</div>
+{{/if}}
 <form method="post" action="/users/register">
     <div class="form-group">
         <label>First_name</label>

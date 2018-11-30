@@ -3,6 +3,7 @@ const md5 = require('md5');
 const microtime = require('microtime');
 const bcrypt = require('bcrypt-nodejs');
 let conn = require('../database/database');
+var empty = require('is-empty');
 
 let router = express.Router();
 const saltRounds = 10;
@@ -29,7 +30,7 @@ router.post('/register', function (req, res) {
     let password = req.body.password;
     let password2 = req.body.password2;
     let cle = md5(microtime.now() * 100000);
-    console.log(cle);
+
     // Validation
     req.checkBody('first_name', 'First_name is required').notEmpty();
     req.checkBody('last_name', 'Last_name is required').notEmpty();
@@ -48,17 +49,74 @@ router.post('/register', function (req, res) {
             errors: errors
         })
     }else{
-        bcrypt.genSalt(saltRounds, function(err, salt) {
-            bcrypt.hash(password, salt,null, function(err, hash) {
-                let sql = 'INSERT INTO users(first_name, last_name, username, email, password, cle) VALUES (?, ?, ?, ?, ?, ?);';
-                conn.query(sql,[first_name, last_name, username, email, hash, cle],function(error, results ,fields) {
-                    if(error) throw error;
-                    req.flash('success_msg', 'You are registered and can now login');
-                    res.redirect('/users/login');
-                });
-            });
+        let slqCheck = 'SELECT * FROM users WHERE username=? OR email=?';
+        conn.query(slqCheck,[username, email], function(error, results, fields){
+           if(error) throw error;
+           if(!empty(results)){
+               res.render('register',{
+                   msg:"User already exists"
+               })
+           }
+           else{
+               bcrypt.genSalt(saltRounds, function(err, salt) {
+                       bcrypt.hash(password, salt,null, function(err, hash) {
+                           let sql = 'INSERT INTO users(first_name, last_name, username, email, password, cle) VALUES (?, ?, ?, ?, ?, ?);';
+                           conn.query(sql,[first_name, last_name, username, email, hash, cle],function(error, results ,fields) {
+                               if(error) throw error;
+                               req.flash('success_msg', 'You are registered and can now login');
+                               res.redirect('/users/login');
+                           });
+                       });
+               });
+           }
         });
         }
 });
 
+router.post('/login', function (req, res) {
+
+    // let email = req.body.email;
+    let username = req.body.username;
+    let password = req.body.password;
+
+    req.checkBody('username', 'Username is required').notEmpty();
+    req.checkBody('password', 'Password is required').notEmpty();
+    let errors = req.validationErrors();
+    if(errors) {
+        res.render('login', {
+            errors: errors
+        })
+    }
+    else{
+        let slqCheck = 'SELECT * FROM users WHERE username=?';
+        conn.query(slqCheck,[username], function(error, results, fields) {
+            if (error) throw error;
+            if(empty(results)){
+                res.render('login',{
+                    msg:"No user exists for this username"
+                })
+            }
+            else{
+                let sqlLogin = 'SELECT * FROM users WHERE username=?';
+                conn.query(sqlLogin,[username], function (error, results, fields) {
+                    if (error) throw error;
+                    else{
+                        bcrypt.compare(password, results[0].password, function(err, result) {
+                            if(!result){
+                                res.render('login',{
+                                    msg:"Wrong password"
+                                })
+                            }
+                            else{
+                                req.flash('success_msg', 'You are registered and can now login');
+                                res.redirect('/');
+                            }
+                        });
+                    }
+                })
+            }
+        })
+    }
+
+});
 module.exports = router;
