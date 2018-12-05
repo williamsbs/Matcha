@@ -1,32 +1,44 @@
 {
-  "name": "login_2",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "name": "matcha",
+  "version": "0.0.3",
+  "description": "This project is about creating a dating website.",
+  "main": "app/server.js",
   "scripts": {
-    "start": "nodemon -e 'js' app.js"
+    "start": "nodemon -e 'js' server.js"
   },
-  "author": "wsabates",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gde-pass/Matcha.git"
+  },
+  "keywords": [
+    "Matcha",
+    "love",
+    "gde-pass",
+    "match",
+    "dating",
+    "website"
+  ],
+  "author": "gde-pass",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gde-pass/Matcha/issues"
+  },
+  "homepage": "https://github.com/gde-pass/Matcha#readme",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
-    "connect-flash": "^0.1.1",
-    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
+    "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-handlebars": "^3.0.0",
     "express-mysql-session": "^2.0.1",
     "express-session": "^1.15.6",
-    "express-validator": "^5.3.0",
+    "fs": "0.0.1-security",
     "jsonwebtoken": "^8.4.0",
-    "md5": "^2.2.1",
-    "microtime": "^2.1.8",
-    "mongodb": "^3.1.10",
-    "mongoose": "^5.3.14",
     "mysql": "^2.16.0",
     "nodemon": "^1.18.7",
-    "passport": "^0.4.0",
-    "passport-local": "^1.0.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "socket.io": "^2.1.1",
+    "validator": "^10.9.0"
   }
 }
