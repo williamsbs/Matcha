@@ -1,27 +1,21 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Matcha Bootstarp Website Template | Login :: w3layouts</title>
+<title>Matcha | Login</title>
 <link href="/assets/css/bootstrap.css" rel='stylesheet' type='text/css' />
-<!-- Custom Theme files -->
 <link href="/assets/css/style.css" rel='stylesheet' type='text/css' />
-<!-- Custom Theme files -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<!--webfont-->
 <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-<!--dropdown-->
-<script src="../assets/css/jquery-1.11.1.min.js"></script>
 </head>
 <body>
 
 <div class="header">
 	<div class='container'>
 		<div class="header_left">
-			<img src="images/rate.png" alt=""/>
+			<img src="/assets/images/rate.png" alt=""/>
 		</div>
 		<div class="logo">
-			<a href="/"><img src="images/logo.png" alt=""/>
+			<a href="/"><img src="/assets/images/logo.png" alt=""/>
 				<span>Matcha</span>
 			</a>
 		</div>
@@ -55,18 +49,20 @@
 			 <div class="col-md-6 login-right">
 			  	<h3>REGISTERED CUSTOMERS</h3>
 				<p>If you have an account with us, please log in.</p>
-				<form>
+
+				<form >
 				  <div>
 					<span>Email Address<label>*</label></span>
-					<input type="text">
+					<input id="login_email" type="text">
 				  </div>
 				  <div>
 					<span>Password<label>*</label></span>
-					<input type="text">
+					<input id="login_password" type="password">
 				  </div>
 				  <a class="forgot" href="#">Forgot Your Password?</a>
-				  <input type="submit" value="Login">
+				  <input id="loginButton" type="submit" value="Login">
 			    </form>
+
 			 </div>
 			 <div class="clearfix"> </div>
 	   </div>
@@ -87,4 +83,8 @@
 	</div>
 </div>
 </body>
+<script src="http://localhost:8080/socket.io/socket.io.js" language="JavaScript"></script>
+<script src="/assets/js/jquery-1.11.1.min.js" language="JavaScript"></script>
+<script src="/assets/js/sweetalert2.all.js" language="JavaScript"></script>
+<script src="/assets/js/login.js" language="JavaScript"></script>
 </html>

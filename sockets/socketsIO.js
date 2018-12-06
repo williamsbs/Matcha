@@ -1,10 +1,9 @@
 "use strict";
 const validator = require("validator");
-let jwtUtils = require('../utils/jwt.utils');
-const express = require('express');
+let jwtUtils = require("../utils/jwt.utils");
 
 const dbUser = require("../database/user.js");
-let db = require('../database/database');
+let db = require("../database/database");
 const check = require("../database/check_validity.js");
 
 module.exports = function(io)
@@ -24,6 +23,10 @@ module.exports = function(io)
             let token = jwtUtils.generateTokenForUser(data.email);
             socket.emit("tokenCreate", token);
             console.log(token);
+        });
+
+        socket.on("parametre", function (data) {
+            console.log(data);
         });
 
         socket.on("focusOutEmailSignUp", async function (email) {

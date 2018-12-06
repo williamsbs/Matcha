@@ -1230,6 +1230,14 @@ ul.list li{
 	font-size:0.8125em;
 	padding:10px;
 }
+
+.login-right input[type="password"] {
+    border: 1px solid #DDDBDB;
+    outline-color:#fb4d01;
+    width: 96%;
+    font-size:0.8125em;
+    padding:10px;
+}
 .login-right input[type="submit"] {
 	background:#d26e8e;
 	color: #FFF;
@@ -1271,6 +1279,14 @@ a.forgot {
 	text-transform: uppercase;
 }
 .register-top-grid input[type="text"], .register-bottom-grid input[type="text"] {
+	border: 1px solid #EEE;
+	outline-color:#FF5B36;
+	width: 96%;
+	font-size: 1em;
+	padding: 0.5em;
+}
+
+.register-top-grid input[type="password"], .register-bottom-grid input[type="password"] {
 	border: 1px solid #EEE;
 	outline-color:#FF5B36;
 	width: 96%;
