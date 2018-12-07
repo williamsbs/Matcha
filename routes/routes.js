@@ -15,7 +15,8 @@ router.get("/home", function (req, res) {
     res.render("home");
 });
 
-router.get("/login", function (req, res) {
+router.get("/login/:token", function (req, res) {
+    console.log(req.get(token));
     res.render('login');
 });
 

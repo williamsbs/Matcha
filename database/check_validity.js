@@ -30,6 +30,19 @@ function checkUserPattern(user) {
 /**
  * @return {boolean}
  */
+
+function checkName(value) {
+    const NameRegex = new RegExp("[A-Za-z]+$");
+
+    if (value.length === 0 || value.length > 254 || !value.match(NameRegex)) {
+        return (false);
+    } else {
+        return (true);
+    }
+}
+/**
+ * @return {boolean}
+ */
 function checkPasswordPattern(password) {
     const passwordRegex = new RegExp("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})");
 
@@ -83,7 +96,8 @@ async function CheckNewUser(newUser, pool) {
 
     if (checkEmailPattern(newUser.email) && await checkEmailValidity(newUser.email, pool) &&
         checkUserPattern(newUser.user) && checkPasswordPattern(newUser.password) &&
-        checkPasswordMatch(newUser.password, newUser.confirmPassword)) {
+        checkPasswordMatch(newUser.password, newUser.confirmPassword)&& checkName(newUser.first_name)
+        && checkName(newUser.last_name)) {
         return (true);
     } else {
         return (false);
