@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Matcha | Home</title>
+
+    <noscript>
+        <meta http-equiv="refresh" content="0; url=/nojs"/>
+    </noscript>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="/assets/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <link href="/assets/css/style.css" rel='stylesheet' type='text/css'/>
+    <link href="/assets/css/flexslider.css" rel='stylesheet' type='text/css'/>
+    <link href="/assets/css/animate.css" rel='stylesheet' type='text/css'/>
+    <link href="/assets/css/score.css" rel='stylesheet' type='text/css'/>
+    <link href="/assets/css/notif.css" rel='stylesheet' type='text/css'/>
+
+
+</head>
+<body>
+<div class="header wow fadeInUp" data-wow-delay="0.4s">
+    <div class='container'>
+        <div class="header_left">
+            <img src="/assets/images/rate.png" alt=""/>
+        </div>
+        <div class="logo">
+            <a href="/"><img src="/assets/images/logo.png" alt=""/>
+                <span>Matcha</span>
+            </a>
+        </div>
+        <%if (locals.connected == false){%>
+        <div class="header_right">
+            <ul class="header_user_info">
+                <a class="login" href="login">
+                    <li class="user_desc"><span class="m_1">Already user ? </span>Login</li>
+                    <i class="user"> </i>
+                    <div class="clearfix"></div>
+                </a>
+                <div class="clearfix"></div>
+            </ul>
+            <a href="register" class="btn1 btn-1 btn1-1b">Sign Up</a>
+        </div>
+        <%}else{%>
+            <div class="header_right">
+                <ul class="header_user_info">
+                    <a class="login" href="profil">
+                        <li class="user_desc">Manage your account</li>
+                        <i class="user"> </i>
+                        <div class="clearfix"></div>
+                    </a>
+                    <div class="clearfix"></div>
+                </ul>
+                <a href="logout" class="btn1 btn-1 btn1-1b">Logout</a>
+            </div>
+        <%}%>
+        <div class="clearfix">
+            <!--  TEST NOTIF ---------------------------->
+
+            <div class="container_notif">
+                <!-- <a href="#" class="button notificationicon on"><div class="notification"></div></a> -->
+                <div class="notification"></div>
+                    <!-- <button>Increment Notifications</button> -->
+            </div>
+            <div class="notif_box">
+                <ul id="output_notif">
+
+                </ul>
+            </div>
+            <!--  TEST NOTIF ---------------------------->
+        </div>
+    </div>
+</div>
+<div class="banner wow bounceInRight" data-wow-delay="0.4s">
+    <div class="container">
+        <div class="banner_right">
+            <h2>Find a perfect date</h2>
+            <h1>Share your perfect moments </h1>
+        </div>
+    </div>
+</div>
+<div class="content_bottom">
+    <div class="container">
+        <% if(locals.users != 1){ %>
+            <a href="recherche">
+                <button class="btn1 btn-1 btn1-1b" style="float: right">recherche</button>
+            </a>
+            <fieldset>
+                <legend>Les utilsateurs fait pour vous:</legend>
+                <div class="box1">
+                    <% for (let i = 0; i < locals.users.length; i++) { /*locals.files_img.forEach(function(el, index){ */%>
+                    <div class="col-md-3 wow fadeInLeft" data-wow-delay="0.4s">
+                        <div class="grid_4"><a href="single?<%= locals.users[i].username%>">
+                                <h4><span class="m_3"><%= locals.users[i].username%></span></h4>
+                                <img src="<%= locals.users[i].profil_img != 0 ? `assets/img/${locals.users[i].profil_img}` : "http://ssl.gstatic.com/accounts/ui/avatar_2x.png" %>"
+                                     class="img-responsive" alt="" style="width: 100%;">
+                                <ul class="category_desc1">
+                                    <% if(locals.users[i].score != 0){ %>
+                                        <li class="cate_head">Score:
+                                            <% for(let j = 0; j < locals.users[i].score; j++){ %>
+                                                <label style="color: #fff;">&#9733;</label>
+                                            <% } %>
+                                        </li>
+                                    <% }else{ %>
+                                        <li class="cate_head" style="height: 30px">No score</li>
+                                    <% } %>
+                                    <div class="clearfix"></div>
+                                </ul>
+                            </a></div>
+                        <br>
+                        <br>
+                    </div>
+                    <% }; %>
+                    <div class="clearfix"></div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Nos suggestion pour vous:</legend>
+                <div class="box1">
+                    <% for (let i = 0; i < locals.suggestion.length; i++) { /*locals.files_img.forEach(function(el, index){ */ %>
+                    <div class="col-md-3 wow fadeInLeft" data-wow-delay="0.4s">
+                        <div class="grid_4"><a href="single?<%= locals.suggestion[i].username %>">
+                                <h4><span class="m_3"><%= locals.suggestion[i].username %></span></h4>
+                                <img src="<%= locals.suggestion[i].profil_img != 0 ? `assets/img/${locals.suggestion[i].profil_img}` : "http://ssl.gstatic.com/accounts/ui/avatar_2x.png" %>"
+                                     class="img-responsive" alt="" style="width: 100%">
+                                <ul class="category_desc1">
+                                    <% if(locals.suggestion[i].score != 0){ %>
+                                        <li class="cate_head">Score:
+                                            <% for(let j = 0; j < locals.suggestion[i].score; j++){ %>
+                                                <label style="color: #fff;">&#9733;</label>
+                                            <% } %>
+                                        </li>
+                                    <% }else{ %>
+                                        <li class="cate_head" style="height: 30px">No score</li>
+                                    <% } %>
+                                    <div class="clearfix"></div>
+                                </ul>
+                            </a></div>
+                    </div>
+                    <% }; %>
+                    <div class="clearfix"></div>
+                </div>
+            </fieldset>
+        <% }else{ %>
+            <a href="profil"><h1>Please fill in your parameters to discover the love of your life</h1>
+                <button class="btn1 btn-1 btn1-1b" style="margin-left: 35%;margin-right: 25%;">Fill my parameters
+                </button>
+            </a>
+        <% } %>
+        <div class='clearfix'></div>
+
+    </div>
+</div>
+<div class="footer">
+    <div class="container">
+        <div class="copy wow fadeInUp" data-wow-delay="0.4s">
+            <p>&copy; 2018 Matcha</p>
+        </div>
+        <div class="social wow fadeInRight" data-wow-delay="0.4s">
+            <ul class="footer_social">
+                <li><a href="#"> <i class="fb"> </i> </a></li>
+                <li><a href="#"> <i class="tw"> </i> </a></li>
+            </ul>
+        </div>
+        <div class='clearfix'></div>
+    </div>
+</div>
+
+<script src="http://localhost:8080/socket.io/socket.io.js" language="JavaScript"></script>
+<script src="/node_modules/jquery/dist/jquery.min.js" language="JavaScript"></script>
+<script src="/assets/js/jquery.easydropdown.js" language="JavaScript"></script>
+<script src="/node_modules/sweetalert2/dist/sweetalert2.all.min.js" language="JavaScript"></script>
+<script defer src="/node_modules/flexslider/jquery.flexslider-min.js" language="JavaScript"></script>
+<script src="/node_modules/wowjs/dist/wow.min.js" language="JavaScript"></script>
+<script src="/assets/js/index.js" language="JavaScript"></script>
+<script src="/assets/js/notif.js" language="JavaScript"></script>
+</body>
+</html>

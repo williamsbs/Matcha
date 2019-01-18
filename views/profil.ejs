@@ -1,0 +1,431 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <noscript>
+        <meta http-equiv="refresh" content="0; url=/nojs"/>
+    </noscript>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/assets/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <link href="/assets/css/style.css" rel='stylesheet' type='text/css'/>
+    <link href="/assets/css/gallery.css" rel='stylesheet' type='text/css'/>
+    <link href="/assets/css/notif.css" rel='stylesheet' type='text/css'/>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="/node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css" rel='stylesheet' type='text/css'/>
+    <link href="/assets/css/profil.css" rel='stylesheet' type='text/css'/>
+    <script src="/assets/js/gallery.js" language="JavaScript"></script>
+
+</head>
+<body>
+<div class="header">
+    <div class='container'>
+        <div class="header_left">
+            <img src="/assets/images/rate.png" alt=""/>
+        </div>
+        <div class="logo">
+            <a href="/"><img src="/assets/images/logo.png" alt=""/>
+                <span>Matcha</span>
+            </a>
+        </div>
+        <% if (locals.connected == false){ %>
+            <div class="header_right">
+                <ul class="header_user_info">
+                    <a class="login" href="login">
+                        <li class="user_desc"><span class="m_1">Already user ? </span>Login</li>
+                        <i class="user"> </i>
+                        <div class="clearfix"></div>
+                    </a>
+                    <div class="clearfix"></div>
+                </ul>
+                <a href="register" class="btn1 btn-1 btn1-1b">Sign Up</a>
+            </div>
+        <% }else{ %>
+            <div class="header_right">
+                <ul class="header_user_info">
+
+                    <a class="login" href="profil">
+                        <li class="user_desc">Manage your account</li>
+                        <i class="user"> </i>
+                        <div class="clearfix"></div>
+                    </a>
+                    <div class="clearfix"></div>
+                </ul>
+                <a href="logout" class="btn1 btn-1 btn1-1b">Logout</a>
+            </div>
+        <% } %>
+        <div class="clearfix">
+            <!--  TEST NOTIF ---------------------------->
+
+            <div class="container_notif">
+                <!-- <a href="#" class="button notificationicon on"><div class="notification"></div></a> -->
+                <div class="notification"></div>
+                    <!-- <button>Increment Notifications</button> -->
+            </div>
+            <div class="notif_box">
+                <ul id="output_notif">
+
+                </ul>
+            </div>
+            <!--  TEST NOTIF ---------------------------->
+
+        </div>
+    </div>
+</div>
+<div class="profile_banner">
+    <div class="container">
+        <h3>Profile</h3>
+    </div>
+</div>
+<div class="container bootstrap snippet">
+    <div class="row">
+        <div class="col-sm-10"><h1><%= [locals.first_name + " " + locals.last_name] %></h1></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3"><!--left col-->
+            <div class="text-center">
+                <img src="<%= locals.profil_img != 'undefined' ? `assets/img/${locals.profil_img}` : "http://ssl.gstatic.com/accounts/ui/avatar_2x.png"%>" class="avatar img-circle img-thumbnail" alt="avatar">
+                <h6>Upload a different photo...</h6>
+                <%= typeof msg != 'undefined' ? msg : ''%>
+                <form action="/upload" method="post" enctype="multipart/form-data">
+                    <div class="file-field input-field">
+                        <div class="input-group mb-3">
+                            <div class="custom-file">
+                                <input name="upload" type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            </div>
+                        </div>
+                    </div>
+                    <button name="sub_upload" class="btn btn-primary" type="submit" value="submit">Submit</button>
+                </form>
+            </div>
+            </hr><br>
+        </div><!--/col-3-->
+        <div class="col-sm-9">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+                <li><a data-toggle="tab" href="#settings">Parametres</a></li>
+                <li><a data-toggle="tab" href="#gallery">Gallery</a></li>
+                <li><a data-toggle="tab" href="#users">Users that have liked your profil</a></li>
+                <li><a data-toggle="tab" href="#visits">Users that have visited your profil</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="home">
+                    <hr>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label><h4>Name: <%= locals.first_name + " " + locals.last_name %></h4></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label><h4>Username: <%= locals.username %></h4></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label>
+                                <h4>Gender: <%= locals.sex %></h4>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label><h4>Age: <%= locals.age %></h4></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label><h4>Sexual orientation: <%= locals.orientation %></h4></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label><h4>Bio: <%= locals.bio %></h4></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label><h4>Tags: <%= locals.tags %></h4></label>
+                        </div>
+                    </div>
+                    <hr>
+                </div><!--/tab-pane-->
+                <div class="tab-pane" id="gallery">
+                    <div id="photos">
+                        <ul id="photo-gallery">
+                            <li>
+                                <% if(locals.files_img != ""){ %>
+                                    <% for (let i = 0; i < locals.files_img.length; i++) { /*locals.files_img.forEach(function(el, index){ */%>
+                                    <form action="/delete_img" method="post">
+                                        <div class="contai">
+                                            <img class="gallery" id="gallery_img"
+                                                 src="<%= locals.files_img[i] != 'undefined' ? `${locals.files_img[i]}` : "http://ssl.gstatic.com/accounts/ui/avatar_2x.png" %>"
+                                                 alt="">
+                                            <input name="img_to_del" type="hidden" value="<%= locals.files_img[i] %>">
+                                            <button class="btn" type="submit">Delete</button>
+                                        </div>
+                                    </form>
+                                <% }}; %>
+                            </li>
+                        </ul>
+                    </div>
+                    <form action="/upload_img" method="post" enctype="multipart/form-data">
+                        <div class="file-field input-field">
+                            <div class="input-group mb-3">
+                                <div class="custom-file">
+                                    <input name="upload" type="file" class="custom-file-input" id="inputGroupFile02" aria-describedby="inputGroupFileAddon01">
+                                </div>
+                            </div>
+                        </div>
+                        <button name="sub_upload" class="btn btn-primary" type="submit" value="submit">Submit</button>
+                    </form>
+                </div><!--/tab-pane-->
+                <div class="tab-pane" id="users">
+                    <div class="box1">
+                        <% for (let i = 0; i < locals.users_that_liked_you.length; i++) { /*locals.files_img.forEach(function(el, index){ */ %>
+                        <div class="col-md-3 wow fadeInLeft" data-wow-delay="0.4s">
+                            <div class="grid_4"><a href="single?<%= locals.users_that_liked_you[i].username %>">
+                                    <h4><span class="m_3"><%= locals.users_that_liked_you[i].username %></span></h4>
+                                    <img src="<%= locals.users_that_liked_you[i].profil_img != 0 ? `assets/img/${locals.users_that_liked_you[i].profil_img}` : "http://ssl.gstatic.com/accounts/ui/avatar_2x.png" %>"
+                                         class="img-responsive" alt="" style="width: 100%">
+                                    <ul class="category_desc1">
+                                        <% if(locals.users_that_liked_you[i].score != 0){ %>
+                                            <li class="cate_head">Score:
+                                                <% for(let j = 0; j < locals.users_that_liked_you[i].score; j++){ %>
+                                                    <label style="color: #fff;">&#9733;</label>
+                                                <% } %>
+                                            </li>
+                                        <% }else{ %>
+                                            <li class="cate_head" style="height: 30px">No score</li>
+                                        <% } %>
+                                        <div class="clearfix"></div>
+                                    </ul>
+                                </a></div>
+                        </div>
+                        <% }; %>
+                        <div class="clearfix"></div>
+                    </div>
+                </div><!--/tab-pane-->
+                <div class="tab-pane" id="settings">
+                    <h2></h2>
+                    <hr>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label for="first_name"><h4>First name</h4></label>
+                            <input type="text" class="form-control" name="first_name" id="first_name"
+                                   placeholder="<%= locals.first_name %>" title="Enter your first name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label for="last_name"><h4>Last name</h4></label>
+                            <input type="text" class="form-control" name="last_name" id="last_name"
+                                   placeholder="<%= locals.last_name %>" title="Enter your last name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label for="Username"><h4>Username</h4></label>
+                            <input type="text" class="form-control" name="username" id="username"
+                                   placeholder="<%= locals.username %>"
+                                   title="Enter your username if any.">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label for="email"><h4>Email</h4></label>
+                            <input type="email" class="form-control" style="text-transform:lowercase" name="email"
+                                   id="email"
+                                   placeholder="<%= locals.email %>" title="Enter your email.">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label for="sex-orient"><h4>Sexual orientation</h4></label>
+                            <select id="orientation" class="dropdown" tabindex="10"
+                                    data-settings='{"wrapperClass":"metro1"}'>
+                                <option value="">Select</option>
+                                <option value="Heterosexual">Heterosexual</option>
+                                <option value="Homosexual">Homosexual</option>
+                                <option value="Bisexual">Bisexual</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label for="gender"><h4>Gender</h4></label>
+                            <select id="gender" class="dropdown" tabindex="10"
+                                    data-settings='{"wrapperClass":"metro1"}'>
+                                <option value="">Select</option>
+                                <option value="Female">Female</option>
+                                <option value="Male">Male</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label for="bio"><h4>Bio</h4></label>
+                            <input type="text" class="form-control" id="bio" placeholder="<%= locals.bio %>"
+                                   title="Enter your bio">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label for="tags"><h4>Tags</h4></label>
+                            <input type="text" list="browsers" class="form-control" id="tags"
+                                   placeholder="<%= locals.tags %>"
+                                   title="Choose your tags">
+                            <datalist id="browsers">
+                                <option value="#chien ">
+                                <option value="#chat ">
+                                <option value="#bigCock ">
+                                <option value="#foodLover ">
+                                <option value="#travel ">
+                                <option value="#sport ">
+                                <option value="#aventure ">
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label for="distance"><h4 id="distanceText">Distance: <%= locals.distance %> (Km)</h4>
+                            </label>
+                            <input type="range" class="form-control" id="distance" value="<%= locals.distance %>"
+                                   min="5" max="50" step="5"
+                                   title="Enter your distance search area"
+                                   onchange="updateTextDistance(this.value);">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label for="age"><h4 id="ageText">Age: <%= locals.age %> </h4></label>
+                            <input type="range" min="18" max="100" class="form-control" name="age" id="age"
+                                   value="<%= locals.age %>" title="Enter your age."
+                                   onchange="updateTextAge(this.value);">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <form>
+                            <label for="password"><h4>Password *</h4></label>
+                            <input type="password" class="form-control" name="password" id="password"
+                                   placeholder="******" title="Enter your password." autocomplete="on">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <form>
+                            <label for="password2"><h4>Verify *</h4></label>
+                            <input type="password" class="form-control" name="password2" id="password2"
+                                   placeholder="******" title="Confirm your password." autocomplete="on">
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label for="ageRangeMin"><h4 id="ageTextRangeMin"> Age Range
+                                                                               Minimal: <%= locals.ageRangeMin %></h4>
+                            </label>
+                            <input type="range" class="form-control" name="ageRangeMin" id="ageRangeMin"
+                                   value="<%= locals.ageRangeMin %>" min="18" max="100"
+                                   onchange="updateTextAgeRangeMin(this.value);">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label for="ageRangeMax"><h4 id="ageTextRangeMax">Age Range
+                                                                              Maximal: <%= locals.ageRangeMax %></h4>
+                            </label>
+                            <input type="range" class="form-control" name="ageRangeMax" id="ageRangeMax"
+                                   value="<%= locals.ageRangeMax %>" min="18" max="100"
+                                   onchange="updateTextAgeRangeMax(this.value);">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label for="latitude"><h4 id="latitudeText">Latitude: <%= locals.latitude %></h4>
+                            </label>
+                            <input type="range" class="form-control" name="latitude" id="latitude"
+                                   value="<%= locals.latitude %>" min="-90" max="90" step="0.0000001" pattern="^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$"
+                                   onchange="updateTextLatitude(this.value);">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label for="longitude"><h4 id="longitudeText">Longitude: <%= locals.longitude %></h4>
+                            </label>
+                            <input type="range" class="form-control" name="longitude" id="longitude"
+                                   value="<%= locals.longitude %>" min="-180" max="180" step="0.0000001" pattern="^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$"
+                                   onchange="updateTextLongitude(this.value);">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <br>
+                            <button id="save" class="btn btn-lg btn-success" type="submit"><i
+                                        class="glyphicon glyphicon-ok-sign"></i> Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="visits">
+
+                    <div class="table-users">
+                        <div class="headerr">Users</div>
+
+                        <table cellspacing="0">
+                            <tr>
+                                <th>Username</th>
+                                <th>Date Visite</th>
+                            </tr>
+
+                            <% for(let i = 0; i < locals.users_that_have_visited_your_profil.length; i++) { %>
+                                <tr>
+                                    <td>
+                                        <a href="http://localhost:8080/single?<%= locals.users_that_have_visited_your_profil[i].visiteur %>"> <%= locals.users_that_have_visited_your_profil[i].visiteur %> </a>
+                                    </td>
+                                    <td><%= locals.users_that_have_visited_your_profil[i].date_visite %></td>
+                                </tr>
+
+                            <% } %>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="container">
+        <div class="copy wow fadeInUp" data-wow-delay="0.4s">
+            <p>&copy; 2018 Matcha</p>
+        </div>
+        <div class='clearfix'></div>
+    </div>
+</div>
+
+<script src="http://localhost:8080/socket.io/socket.io.js" language="JavaScript"></script>
+<script src="/node_modules/jquery/dist/jquery.min.js" language="JavaScript"></script>
+<script src="/node_modules/js-cookie/src/js.cookie.js" language="JavaScript"></script>
+<script src="/node_modules/sweetalert2/dist/sweetalert2.all.min.js" language="JavaScript"></script>
+<script src="/assets/js/jquery.easydropdown.js" language="JavaScript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" language="JavaScript"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" language="JavaScript"></script>
+<script src="/assets/js/profil.js" language="JavaScript"></script>
+<script src="/assets/js/notif.js" language="JavaScript"></script>
+<script src="/node_modules/jquery/dist/jquery.min.js" language="JavaScript"></script>
+<script src="/assets/js/gallery.js" language="JavaScript"></script>
+<script src="/node_modules/bootstrap-slider/dist/bootstrap-slider.min.js" language="JavaScript"></script>
+
+</body>
+</html>

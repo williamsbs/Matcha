@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Matcha | Single</title>
+
+    <noscript>
+        <meta http-equiv="refresh" content="0; url=/nojs"/>
+    </noscript>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href="/assets/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <link href="/assets/css/style.css" rel='stylesheet' type='text/css'/>
+    <link href="/assets/css/gallery.css" rel='stylesheet' type='text/css'/>
+    <link href="/assets/css/notif.css" rel='stylesheet' type='text/css'/>
+    <link href="/assets/css/score.css" rel='stylesheet' type='text/css'/>
+
+</head>
+<body>
+<div class="header">
+    <div class='container'>
+        <div class="header_left">
+            <img src="/assets/images/rate.png" alt=""/>
+        </div>
+        <div class="logo">
+            <a href="/"><img src="/assets/images/logo.png" alt=""/>
+                <span>Matcha</span>
+            </a>
+        </div>
+        <%if (locals.connected == false){%>
+            <div class="header_right">
+                <ul class="header_user_info">
+                    <a class="login" href="login">
+                        <li class="user_desc"><span class="m_1">Already user ? </span>Login</li>
+                        <i class="user"> </i>
+                        <div class="clearfix"></div>
+                    </a>
+                    <div class="clearfix"></div>
+                </ul>
+                <a href="register" class="btn1 btn-1 btn1-1b">Sign Up</a>
+            </div>
+        <%}else{%>
+            <div class="header_right">
+                <ul class="header_user_info">
+                    <a class="login" href="profil">
+                        <li class="user_desc">Manage your account</li>
+                        <i class="user"> </i>
+                        <div class="clearfix"></div>
+                    </a>
+                    <div class="clearfix"></div>
+                </ul>
+                <a href="logout" class="btn1 btn-1 btn1-1b">Logout</a>
+            </div>
+        <%}%>
+        <div class="clearfix">
+
+            <!--  TEST NOTIF ---------------------------->
+
+            <div class="container_notif">
+                <!-- <a href="#" class="button notificationicon on"><div class="notification"></div></a> -->
+                <div class="notification"></div>
+                    <!-- <button>Increment Notifications</button> -->
+            </div>
+            <div class="notif_box">
+                <ul id="output_notif">
+
+                </ul>
+            </div>
+            <!--  TEST NOTIF ---------------------------->
+        </div>
+    </div>
+</div>
+<div class="profile_banner">
+    <div class="container">
+        <h3>Profile</h3>
+    </div>
+</div>
+<div class="profile">
+    <div class="container">
+        <% if (locals.match == true){ %>
+            <div class="alert alert-success"><%= "You have matched" %></div>
+        <% } %>
+        <% if(locals.like != null){ %>
+            <button id="like_btn" class="btn2 btn-2 btn2-2b" type="submit"><%= locals.like %></button>
+        <% } %>
+        <% if(locals.match == true){ %>
+            <a href="./chat?<%= locals.user.username %>"><button id="like_btn" class="btn2 btn-2 btn2-2b" type="submit">Discuter</button></a>
+        <% } %>
+        <div class="col-md-8 profile_left">
+            <div class="lsidebar span_1_of_profile">
+                <div class="grid_4">
+                    <img src="<%= locals.user.profil_img != 0 ? `assets/img/${locals.user.profil_img}` : "http://ssl.gstatic.com/accounts/ui/avatar_2x.png" %>"
+                         class="img-responsive" alt="" style="width: 100%">
+                    <ul class="category_desc1">
+                        <% if(locals.user.score != 0){ %>
+                            <li class="cate_head">Score:
+                                <% for(let i = 0; i < locals.user.score; i++){ %>
+                                    <label style="color: #fff;">&#9733;</label>
+                                <% } %>
+                            </li>
+                        <% }else{ %>
+                            <li class="cate_head">No score</li>
+                        <% } %>
+                        <div class="clearfix"></div>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cont span_2_of_profile">
+                <% if(locals.status == 'Y'){ %>
+                <h4><%= locals.user.first_name + " " + locals.user.last_name%> <p class="status on">ONLINE</p></h4>
+                <% }else{ %>
+                <h4><%= locals.user.first_name + " " + locals.user.last_name%> <p class="status">dernière connexion : <%= locals.last_c %></p></h4>
+                <% } %>
+                <table class="profile-fields">
+                    <tbody>
+                    <tr>
+                        <th>Gender</th>
+                        <td><%= locals.user.gender %></td>
+                    </tr>
+                    <tr>
+                        <th>Age</th>
+                        <td><%= locals.user.age %></td>
+                    </tr>
+                    <tr>
+                        <th>Orientation</th>
+                        <td><%= locals.user.orientation %></td>
+                    </tr>
+                    <tr>
+                        <th>tags</th>
+                        <td><%= locals.user.tags %></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><%= locals.user.bio %></p>
+            </div>
+            <div id="wrapper">
+                <button class="btn2 btn-2 btn2-2b" id="report" type="button" value="report" name="report">report</button>
+                <button id="bloque_btn" class="btn2 btn-2 btn2-2b" type="submit"><%=locals.bloqued%></button>
+                <form action="/score?<%= locals.username %>" method="post">
+                    <p class="clasificacion">
+                        <input id="radio1" type="radio" name="etoile"
+                               value="5" <%= locals.etoiles == 5 ? checked = "checked" : "" %>>
+                        <label for="radio1">&#9733;</label>
+                        <input id="radio2" type="radio" name="etoile"
+                               value="4" <%= locals.etoiles == 4 ? checked = "checked" : "" %>>
+                        <label for="radio2">&#9733;</label>
+                        <input id="radio3" type="radio" name="etoile"
+                               value="3" <%= locals.etoiles == 3 ? checked = "checked" : "" %>>
+                        <label for="radio3">&#9733;</label>
+                        <input id="radio4" type="radio" name="etoile"
+                               value="2" <%= locals.etoiles == 2 ? checked = "checked" : "" %>>
+                        <label for="radio4">&#9733;</label>
+                        <input id="radio5" type="radio" name="etoile"
+                               value="1" <%= locals.etoiles == 1 ? checked = "checked" : "" %>>
+                        <label for="radio5">&#9733;</label>
+                    </p>
+                    <p>
+                        <button class="btn2 btn-2 btn2-2b" type="submit" value="submit" name="submit">Noter</button>
+                    </p>
+                </form>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <aside class="tab-pane" id="gallery" style="float: right">
+        <div id="photos1" style='overflow:auto; width:400px;height:400px;'>
+            <ul id="photo-aff">
+                <li>
+                    <% if(locals.files_img != ""){ %>
+                        <% for (let i = 0; i < locals.files_img.length; i++) { /*locals.files_img.forEach(function(el, index){ */ %>
+                        <img src="<%= locals.files_img[i] != 'undefined' ? `${locals.files_img[i] }` : "http://ssl.gstatic.com/accounts/ui/avatar_2x.png" %>"
+                             alt="">
+                    <% }}; %>
+                </li>
+            </ul>
+        </div>
+    </aside>
+</div>
+<% if(locals.asLikedYou == true){ %>
+    <h1 style="text-align: center">This user liked your profil</h1>
+<% } %>
+<div class="footer">
+    <div class="container">
+        <div class="copy wow fadeInUp" data-wow-delay="0.4s">
+            <p>&copy; 2018 Matcha</p>
+        </div>
+        <div class='clearfix'></div>
+    </div>
+</div>
+<script src="http://localhost:8080/socket.io/socket.io.js" language="JavaScript"></script>
+<script src="/node_modules/js-cookie/src/js.cookie.js" language="JavaScript"></script>
+<script src="/node_modules/jquery/dist/jquery.min.js" language="JavaScript"></script>
+<script src="/node_modules/sweetalert2/dist/sweetalert2.all.min.js" language="JavaScript"></script>
+<script src="/assets/js/single.js" language="JavaScript"></script>
+<script src="/assets/js/notif.js" language="JavaScript"></script>
+<script src="/assets/js/jquery.flexisel.js" language="JavaScript"></script>
+</body>
+</html>
